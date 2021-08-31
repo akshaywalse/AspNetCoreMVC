@@ -21,4 +21,8 @@
     <Folder Include="Models\BranddetailsModel\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\Images\virat.jfif" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<OnlineGroceryStore.Models.Branddetail>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Brandname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Contractstartdate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Totalnoofyearcontract)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Brandlogo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brandname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contractstartdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Totalnoofyearcontract)
+                </td>
+                <td>
+                    @{ byte[] bt = item.Brandlogo;
+                        string str = Convert.ToBase64String(bt);
+                        var imgsrc = string.Format("data:image/jpg;base64,{0}", str);
+                        <img src="@imgsrc" width="100" height="100" alt="Gr8" /> }
+
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Brandname">Edit</a> |
+
+                    <a asp-action="Delete" asp-route-id="@item.Brandname">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

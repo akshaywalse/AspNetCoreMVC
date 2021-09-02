@@ -54,16 +54,26 @@ namespace OnlineGroceryStore.Models
         // GET: CategorysController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+
+            OnlineGroceryStoreDBContext ogsd = new OnlineGroceryStoreDBContext();
+            Category cat = ogsd.Categories.FirstOrDefault(i => i.CategoryId == id);
+            return View(cat);
         }
 
         // POST: CategorysController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Category cobj)
         {
             try
             {
+
+                OnlineGroceryStoreDBContext ogsd = new OnlineGroceryStoreDBContext();
+                Category cat = ogsd.Categories.FirstOrDefault(i => i.CategoryId == cobj.CategoryId);
+                cat.CategoryName = cobj.CategoryName;
+                cat.ParentCategoryId = cobj.ParentCategoryId;
+                ogsd.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -76,20 +86,20 @@ namespace OnlineGroceryStore.Models
         public ActionResult Delete(int id)
         {
             OnlineGroceryStoreDBContext ogsd = new OnlineGroceryStoreDBContext();
-            Category cat = ogsd.Categories.FirstOrDefault(i=> i.CategoryId ==id);
+            Category cat = ogsd.Categories.FirstOrDefault(i => i.CategoryId == id);
             return View(cat);
         }
 
         // POST: CategorysController/Delete/5
         [HttpPost]
-       // [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public ActionResult Delete()
         {
             try
             {
                 OnlineGroceryStoreDBContext ogsd = new OnlineGroceryStoreDBContext();
                 int id = int.Parse(Request.Form["DeleteCategoryId"].ToString());
-                Category cat = ogsd.Categories.FirstOrDefault(i=> i.CategoryId == id);
+                Category cat = ogsd.Categories.FirstOrDefault(i => i.CategoryId == id);
                 ogsd.Categories.Remove(cat);
                 ogsd.SaveChanges();
                 return RedirectToAction("Index");

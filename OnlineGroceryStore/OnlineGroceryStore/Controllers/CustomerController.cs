@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineGroceryStore.CategoryProduct;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace OnlineGroceryStore.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            OnlineGroceryStoreDBContext ogsd = new OnlineGroceryStoreDBContext();
+
+            return View(ogsd.Products.ToList());
+            
         }
     }
 }
